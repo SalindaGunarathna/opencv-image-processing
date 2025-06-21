@@ -3,12 +3,22 @@ import numpy as np
 import sys
 import os
 
+def convert_to_grayscale(image):
+    """Convert color image to grayscale if it's not already grayscale"""
+    if len(image.shape) == 3:
+        return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    return image
+
 def reduce_intensity_levels(image, levels):
+    # Convert to grayscale first for proper intensity level reduction
+    gray_image = convert_to_grayscale(image)
+    
     # levels must be a power of 2
     if levels < 2 or (levels & (levels - 1)) != 0:
         raise ValueError("Levels must be a power of 2 and >= 2")
+    
     factor = 256 // levels
-    reduced = (image // factor) * factor
+    reduced = (gray_image // factor) * factor
     return reduced.astype(np.uint8)
 
 def average_filter(image, ksize):
@@ -72,12 +82,14 @@ def main():
     base = os.path.splitext(os.path.basename(image_path))[0]
 
     # 1. Intensity reduction: user-specified or default
+    # Note: Images are converted to grayscale for intensity level reduction
     levels_list = parse_levels_arg()
     for levels in levels_list:
-        reduced = reduce_intensity_levels(image, levels)
-        out_path = f"{base}_reduced_{levels}.png"
-        cv2.imwrite(out_path, reduced)
-        print(f"Saved: {out_path}")
+        # Grayscale version (recommended for intensity level reduction)
+        reduced_gray = reduce_intensity_levels(image, levels)
+        out_path_gray = f"{base}_reduced_{levels}.png"
+        cv2.imwrite(out_path_gray, reduced_gray)
+        print(f"Saved: {out_path_gray} (grayscale, {levels} intensity levels)")
 
     # 2. Average filter: 3x3, 10x10, 20x20
     for k in [3, 10, 20]:
