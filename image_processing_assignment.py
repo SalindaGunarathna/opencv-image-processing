@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import sys
 import os
-
+# Convert to grayscale if the image is not already grayscale
 def convert_to_grayscale(image):
     """Convert color image to grayscale if it's not already grayscale"""
     if len(image.shape) == 3:
@@ -110,7 +110,7 @@ def main():
         out_path = f"{base}_block_{b}x{b}.png"
         cv2.imwrite(out_path, blk)
         print(f"Saved: {out_path}")
-        
+
 
 if __name__ == "__main__":
     main() 
