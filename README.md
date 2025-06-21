@@ -4,11 +4,6 @@ This repository contains Python programs to perform various image processing ope
 
 ## Operations Implemented
 
-### 1. Intensity Level Reduction
-**Question**: Do we need to convert the image to grayscale (black and white) first?
-
-**Answer**: **YES**, for proper intensity level reduction, the image should be converted to grayscale first. Here's why:
-
 - Intensity levels refer to the brightness/darkness of pixels
 - Color images have 3 channels (RGB), each with 256 levels
 - Grayscale images have only 1 channel with 256 intensity levels

@@ -85,7 +85,6 @@ def main():
     # Note: Images are converted to grayscale for intensity level reduction
     levels_list = parse_levels_arg()
     for levels in levels_list:
-       
         reduced_gray = reduce_intensity_levels(image, levels)
         out_path_gray = f"{base}_reduced_{levels}.png"
         cv2.imwrite(out_path_gray, reduced_gray)
@@ -111,6 +110,7 @@ def main():
         out_path = f"{base}_block_{b}x{b}.png"
         cv2.imwrite(out_path, blk)
         print(f"Saved: {out_path}")
+        
 
 if __name__ == "__main__":
     main() 
